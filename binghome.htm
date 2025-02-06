@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bing - MadEGG</title>
+  <style>
+    /* General Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      background-image: url('https://imgproxy.nanxiongnandi.com/-gRjoiThNiyVQRMcl52VMwGbYcon_tQsJhHfcnSzBO8/w:1280/aHR0cHM6Ly9pbWcu/bmFueGlvbmduYW5k/aS5jb20vMjAyMTA3/L1Zlcm1pbGlvbkxh/a2VzXzE5MjB4MTA4/MC5qcGc.jpg'); /* Default background */
+      background-size: cover;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      color: white;
+      text-align: center;
+      overflow: hidden;
+      animation: fadeIn 3s ease;
+    }
+
+    @keyframes fadeIn {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+
+    /* Navigation bar styling */
+    .navbar {
+      position: absolute;
+      top: 20px;
+      display: flex;
+      gap: 20px;
+      z-index: 10;
+    }
+
+    /* Copilot button styling */
+    .copilot-btn {
+      background: rgba(255, 255, 255, 0.3);
+      padding: 10px;
+      border: none;
+      cursor: pointer;
+      border-radius: 50%;
+      box-shadow: 0 4px 15px rgba(255, 255, 255, 0.5);
+      transition: background 0.3s ease, transform 0.3s ease;
+    }
+
+    .copilot-btn:hover {
+      background: rgba(255, 255, 255, 0.5);
+      transform: scale(1.1);
+    }
+
+    .copilot-btn img {
+      width: 40px;
+      height: 40px;
+    }
+
+    /* Other buttons styling */
+    .navbar button {
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      color: white;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 5px;
+      padding: 10px 20px;
+      transition: background 0.4s ease, transform 0.3s ease, box-shadow 0.4s ease;
+      box-shadow: 0 4px 15px rgba(255, 255, 255, 0.3);
+    }
+
+    .navbar button:hover {
+      background: rgba(255, 255, 255, 0.6);
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(255, 255, 255, 0.5);
+    }
+
+    /* Bing logo styling */
+    .logo {
+      width: 250px;
+      margin-bottom: 30px;
+      animation: logoAnimation 2s ease;
+    }
+
+    @keyframes logoAnimation {
+      0% { opacity: 0; transform: translateY(-30px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Search bar container styling */
+    .search-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      animation: searchBarAnimation 1s ease-out;
+    }
+
+    @keyframes searchBarAnimation {
+      0% { opacity: 0; transform: scale(0.8); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+
+    /* Search input styling */
+    .search-bar {
+      width: 100%;
+      max-width: 1400px;
+      padding: 20px;
+      border-radius: 40px;
+      border: 2px solid rgba(255, 255, 255, 0.6);
+      background: rgba(255, 255, 255, 0.3);
+      color: white;
+      font-size: 18px;
+      outline: none;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(255, 255, 255, 0.4);
+      backdrop-filter: blur(5px);
+      transition: background 0.3s ease, transform 0.3s ease;
+    }
+
+    .search-bar:hover {
+      background: rgba(255, 255, 255, 0.4);
+      transform: scale(1.05);
+    }
+
+    /* Change Background Button */
+    #changeBackgroundBtn {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      background: rgba(255, 255, 255, 0.5);
+      color: white;
+      padding: 10px 20px;
+      border-radius: 30px;
+      border: none;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.3s ease;
+      box-shadow: 0 4px 15px rgba(255, 255, 255, 0.4);
+    }
+
+    #changeBackgroundBtn:hover {
+      background: rgba(255, 255, 255, 0.7);
+      transform: scale(1.05);
+    }
+
+    #changeBackgroundBtn input[type="file"] {
+      display: none;
+    }
+
+    /* Custom context menu styling */
+    .custom-context-menu {
+      display: none;
+      position: absolute;
+      background-color: rgba(0, 0, 0, 0.8);
+      color: white;
+      padding: 10px;
+      border-radius: 5px;
+      z-index: 9999;
+    }
+    .custom-context-menu button {
+      background: rgba(255, 255, 255, 0.3);
+      color: white;
+      padding: 10px;
+      border: none;
+      cursor: pointer;
+      margin: 5px 0;
+      border-radius: 5px;
+    }
+    .custom-context-menu button:hover {
+      background: rgba(255, 255, 255, 0.6);
+    }
+
+    /* Popup styling for Notes */
+    .popup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      padding: 20px;
+      background: rgba(0, 0, 0, 0.7);
+      color: white;
+      border-radius: 10px;
+      z-index: 20;
+      max-width: 400px;
+      text-align: left;
+    }
+
+    .popup.active {
+      display: block;
+    }
+
+    .popup button {
+      background: #f44336;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      cursor: pointer;
+      margin-top: 20px;
+      border-radius: 5px;
+    }
+
+    .popup button:hover {
+      background: #d32f2f;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <div class="navbar">
+    <a href="https://copilot.microsoft.com/" class="copilot-btn">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Microsoft_365_Copilot_Icon.svg/640px-Microsoft_365_Copilot_Icon.svg.png" alt="Microsoft 365 Copilot">
+    </a>
+    <a href="https://www.bing.com/images?FORM=Z9LH"><button>Images</button></a>
+    <a href="https://www.bing.com/news/search?q=Top+stories&nvaug=%5bNewsVertical+Category%3d%22rt_MaxClass%22%5d&FORM=Z9LH3"><button>News</button></a>
+    <a href="https://www.start.gg/discover?ocid=ESPHUB_BNG_10"><button>Gaming</button></a>
+    <a href="https://www.msn.com/en-us/play?ocid=cgbinghp"><button>Games</button></a>
+    <a href="https://www.bing.com/search?q=Bing+translate&FORM=TTAHP1"><button>Translate</button></a>
+    <button id="aboutBtn">About</button>
+  </div>
+
+  <!-- Bing Logo -->
+  <img src="https://pocketables.com/wp-content/uploads/2023/09/Bing-logo.png" alt="Bing Logo" class="logo">
+
+  <!-- Search Container -->
+  <div class="search-container">
+    <form action="https://www.bing.com/search" method="get">
+      <input type="text" name="q" class="search-bar" placeholder="Search Bing..." required>
+    </form>
+  </div>
+
+  <!-- Change Background Button -->
+  <button id="changeBackgroundBtn">
+    Change Background
+    <input type="file" id="backgroundInput" accept="image/*">
+  </button>
+
+  <!-- Custom Context Menu -->
+  <div id="contextMenu" class="custom-context-menu">
+    <button id="viewNotesBtn">View Notes</button>
+    <button id="addNotesBtn">Add Notes</button>
+    <button id="deleteNotesBtn">Delete Notes</button>
+  </div>
+
+  <!-- Notes Popup -->
+  <div id="notesPopup" class="popup">
+    <h3>Add a Note</h3>
+    <textarea id="newNote" rows="4" cols="30" placeholder="Type your note here..."></textarea><br>
+    <button id="addNoteToList">Add Note</button>
+    <button id="closePopup">Close</button>
+  </div>
+
+  <script>
+    // Apply background from localStorage on page load
+    window.onload = function() {
+      const savedBackground = localStorage.getItem('backgroundImage');
+      if (savedBackground) {
+        document.body.style.backgroundImage = `url(${savedBackground})`;
+      }
+    };
+
+    // Change Background functionality
+    const changeBackgroundBtn = document.getElementById('changeBackgroundBtn');
+    const backgroundInput = document.getElementById('backgroundInput');
+    changeBackgroundBtn.addEventListener('click', function () {
+      backgroundInput.click();
+    });
+
+    backgroundInput.addEventListener('change', function (event) {
+      const file = event.target.files[0];
+      if (file && file.type.startsWith('image/')) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          const imageUrl = e.target.result;
+          document.body.style.backgroundImage = `url(${imageUrl})`;
+          localStorage.setItem('backgroundImage', imageUrl);
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    // Notes functionality
+    const contextMenu = document.getElementById('contextMenu');
+    const viewNotesBtn = document.getElementById('viewNotesBtn');
+    const addNotesBtn = document.getElementById('addNotesBtn');
+    const deleteNotesBtn = document.getElementById('deleteNotesBtn');
+    const notesPopup = document.getElementById('notesPopup');
+    const newNoteTextarea = document.getElementById('newNote');
+    const addNoteToList = document.getElementById('addNoteToList');
+    const closePopup = document.getElementById('closePopup');
+    const notesKey = 'userNotes';
+
+    // Load notes from localStorage
+    function loadNotes() {
+      const notes = JSON.parse(localStorage.getItem(notesKey)) || [];
+      return notes;
+    }
+
+    // Save notes to localStorage
+    function saveNotes(notes) {
+      localStorage.setItem(notesKey, JSON.stringify(notes));
+    }
+
+    // Display notes in the context menu
+    viewNotesBtn.addEventListener('click', function() {
+      const notes = loadNotes();
+      alert('Notes: \n' + notes.join('\n'));
+    });
+
+    // Add a note
+    addNotesBtn.addEventListener('click', function() {
+      notesPopup.classList.add('active');
+    });
+
+    addNoteToList.addEventListener('click', function() {
+      const noteText = newNoteTextarea.value.trim();
+      if (noteText) {
+        const notes = loadNotes();
+        notes.push(noteText);
+        saveNotes(notes);
+        newNoteTextarea.value = ''; // Clear the text area
+        notesPopup.classList.remove('active');
+        alert('Note added!');
+      }
+    });
+
+    // Close the popup
+    closePopup.addEventListener('click', function() {
+      notesPopup.classList.remove('active');
+    });
+
+    // Delete all notes
+    deleteNotesBtn.addEventListener('click', function() {
+      localStorage.removeItem(notesKey);
+      alert('All notes deleted!');
+    });
+
+    // Right-click menu functionality
+    document.addEventListener('contextmenu', function(e) {
+      e.preventDefault();
+      contextMenu.style.top = `${e.clientY}px`;
+      contextMenu.style.left = `${e.clientX}px`;
+      contextMenu.style.display = 'block';
+    });
+
+    document.addEventListener('click', function() {
+      contextMenu.style.display = 'none';
+    });
+
+    // Keyboard shortcuts functionality
+    document.addEventListener('keydown', function(e) {
+      if (e.ctrlKey && e.key === 'n') {
+        // Add Notes shortcut (Ctrl + N)
+        addNotesBtn.click();
+      } else if (e.ctrlKey && e.key === 'v') {
+        // View Notes shortcut (Ctrl + V)
+        viewNotesBtn.click();
+      } else if (e.ctrlKey && e.key === 'd') {
+        // Delete Notes shortcut (Ctrl + D)
+        deleteNotesBtn.click();
+      } else if (e.ctrlKey && e.key === 'b') {
+        // Change Background shortcut (Ctrl + B)
+        changeBackgroundBtn.click();
+      }
+    });
+
+    // URL Shortcuts (added section)
+    document.addEventListener('keydown', function(e) {
+      if (e.ctrlKey && e.key === '1') {
+        window.location.href = "https://www.bing.com/images?FORM=Z9LH";
+      } else if (e.ctrlKey && e.key === '2') {
+        window.location.href = "https://www.bing.com/news/search?q=Top+stories&nvaug=%5bNewsVertical+Category%3d%22rt_MaxClass%22%5d&FORM=Z9LH3";
+      } else if (e.ctrlKey && e.key === '3') {
+        window.location.href = "https://www.start.gg/discover?ocid=ESPHUB_BNG_10";
+      } else if (e.ctrlKey && e.key === '4') {
+        window.location.href = "https://www.msn.com/en-us/play?ocid=cgbinghp";
+      } else if (e.ctrlKey && e.key === '5') {
+        window.location.href = "https://www.bing.com/search?q=Bing+translate&FORM=TTAHP1";
+      }
+    });
+
+  </script>
+
+</body>
+</html>
