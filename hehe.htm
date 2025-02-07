@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MadEgg EX</title>
+    <link href="https://fonts.cdnfonts.com/css/facon" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Facon', sans-serif;
+            text-align: center;
+            background-color: #121212;
+            color: white;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+        .button-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+        }
+        .game-button {
+            background-color: #222;
+            border: 2px solid white;
+            padding: 10px;
+            width: 150px;
+            cursor: pointer;
+            transition: transform 0.3s ease-in-out;
+        }
+        .game-button:hover {
+            transform: scale(1.1);
+        }
+        img {
+            width: 100px;
+            height: 100px;
+        }
+        .settings {
+            margin-top: 30px;
+        }
+        input, select, button {
+            padding: 5px;
+            margin-top: 10px;
+        }
+        .dark-mode {
+            background-color: #121212;
+            color: white;
+        }
+        .light-mode {
+            background-color: #ffffff;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <h1>MadEgg EX</h1>
+    <div class="settings">
+        <h2>About:blank cloaker</h2>
+        <input type="text" id="gameInput" placeholder="Enter game name from above ^^^">
+        <button onclick="openInBlank()">Open</button>
+    </div>
+    <script>
+        const gameLinks = {
+            "baldis basics": "https://inkboym.github.io/inkboymmath/baldigame.html",
+            "doge 2048": "https://inkboym.github.io/inkboymmath/doge.html",
+            "funny shooter": "https://inkboym.github.io/inkboymmath/funnyshooter.html",
+            "minecraft": "https://inkboym.github.io/inkboymmath/minicraft.html",
+            "cookie clicker": "https://inkboym.github.io/inkboymmath/stormykittenrefernce.html"
+        };
+
+        function openInBlank() {
+            let gameName = document.getElementById('gameInput').value.toLowerCase();
+            let newWindow = window.open("about:blank", "_blank");
+            
+            if (gameName === "poki" || gameName === "crazygames") {
+                newWindow.document.write(`<embed src="https://freegames.io" style="width:100vw; height:100vh;">`);
+            } else if (gameLinks[gameName]) {
+                newWindow.document.write(`<embed src="${gameLinks[gameName]}" style="width:100vw; height:100vh;">`);
+            } else {
+                alert("Game not found!");
+            }
+        }
+    </script>
+</body>
+</html>
