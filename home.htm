@@ -12,7 +12,6 @@
             background-color: #121212;
             color: white;
             transition: background-color 0.3s, color 0.3s;
-            cursor: none; /* Hide default cursor */
         }
         h1 {
             font-size: 3rem;
@@ -29,7 +28,6 @@
             border: 2px solid white;
             padding: 10px;
             width: 150px;
-            cursor: none; /* Hide default cursor */
             transition: transform 0.3s ease-in-out;
         }
         .game-button:hover {
@@ -46,7 +44,6 @@
             background-color: #333;
             border: none;
             padding: 10px;
-            cursor: none; /* Hide default cursor */
             border-radius: 5px;
         }
         .dark-mode {
@@ -63,7 +60,12 @@
             position: fixed;
             pointer-events: none;
             z-index: 9999;
-            display: none; /* Initially hidden */
+            transform: translate(-50%, -50%);
+            display: none;
+        }
+        a, button {
+            color: inherit;
+            text-decoration: none;
         }
     </style>
 </head>
@@ -107,18 +109,19 @@
 
         const customCursor = document.getElementById('custom-cursor');
 
-        // Track mouse movement
         document.addEventListener('mousemove', (e) => {
             if (customCursor.style.display === 'block') {
-                customCursor.style.left = e.pageX + 'px';
-                customCursor.style.top = e.pageY + 'px';
+                const x = e.clientX;
+                const y = e.clientY;
+                customCursor.style.left = x + 'px';
+                customCursor.style.top = y + 'px';
             }
         });
 
         function applyCursor(cursorType) {
             if (cursorType === 'default') {
                 customCursor.style.display = 'none';
-                document.body.style.cursor = 'none';
+                document.body.style.cursor = 'default';
             } else {
                 customCursor.src = cursorImages[cursorType];
                 customCursor.style.display = 'block';
@@ -126,13 +129,22 @@
             }
         }
 
-        // Load settings on page load
         window.onload = function() {
             let savedTheme = localStorage.getItem('theme') || 'dark';
             document.body.className = savedTheme === 'dark' ? 'dark-mode' : 'light-mode';
             
             let savedCursor = localStorage.getItem('cursor') || 'default';
             applyCursor(savedCursor);
+
+            let savedTitle = localStorage.getItem('tabTitle');
+            let savedIcon = localStorage.getItem('tabIcon');
+            if (savedTitle) document.title = savedTitle;
+            if (savedIcon) {
+                let link = document.querySelector("link[rel='icon']") || document.createElement('link');
+                link.rel = 'icon';
+                link.href = savedIcon;
+                document.head.appendChild(link);
+            }
         };
     </script>
 </body>
