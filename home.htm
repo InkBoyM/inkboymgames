@@ -37,14 +37,19 @@
             width: 100px;
             height: 100px;
         }
-        .settings-button {
+        .top-buttons {
             position: fixed;
             top: 20px;
             right: 20px;
+            display: flex;
+            gap: 10px;
+        }
+        .top-button {
             background-color: #333;
             border: none;
             padding: 10px;
             border-radius: 5px;
+            cursor: pointer;
         }
         .dark-mode {
             background-color: #121212;
@@ -71,7 +76,10 @@
 </head>
 <body>
     <img id="custom-cursor" alt="cursor">
-    <button class="settings-button" onclick="window.location.href='https://inkboym.github.io/inkboymmath/settings.htm'">⚙️ Settings</button>
+    <div class="top-buttons">
+        <button class="top-button" onclick="window.location.href='https://inkboym.github.io/inkboymmath/soundeffect.htm'">🎵 Music</button>
+        <button class="top-button" onclick="window.location.href='https://inkboym.github.io/inkboymmath/settings.htm'">⚙️ Settings</button>
+    </div>
     <h1>MadEgg EX</h1>
     <div class="button-container">
         <a class="game-button" href="https://inkboym.github.io/inkboymmath/binghome.htm">
