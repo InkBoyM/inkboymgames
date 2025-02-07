@@ -13,7 +13,6 @@
             color: white;
             transition: background-color 0.3s, color 0.3s;
             padding: 20px;
-            cursor: none; /* Hide default cursor */
         }
         .settings-container {
             max-width: 800px;
@@ -32,7 +31,6 @@
             background-color: #333;
             border: none;
             padding: 10px;
-            cursor: none; /* Hide default cursor */
             border-radius: 5px;
             color: white;
         }
@@ -43,7 +41,6 @@
             color: white;
             border: 1px solid #444;
             border-radius: 5px;
-            cursor: none; /* Hide default cursor */
         }
         input[type="text"] {
             padding: 8px;
@@ -73,7 +70,12 @@
             position: fixed;
             pointer-events: none;
             z-index: 9999;
-            display: none; /* Initially hidden */
+            transform: translate(-50%, -50%);
+            display: none;
+        }
+        a, button {
+            color: inherit;
+            text-decoration: none;
         }
     </style>
 </head>
@@ -130,16 +132,17 @@
         const cursorImages = {
             'glitch': 'https://www.pngmart.com/files/22/Cursor-PNG-Transparent.png',
             'clean': 'https://www.transparentpng.com/download/cursor/blue-frame-game-cursor-clipart-png-ClaSFm.png',
-            'nostalgia': 'https://i.ppy.sh/20d53bd6ee1b558442305d847240ae730791021b/68747470733a2f2f696d6775722d617263686976652e7070792e73682f646973636f72642f3435303635373333313233313938313538302d3439323436313035373337383631353330362d637572736f722e706e67'
+            'nostalgia': 'https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/e1254a25-ec8e-4043-8ea7-d6f5fa4e32fe/dhdwtkp-908ea2d9-35d6-4e72-9aa3-eb1def5e5e6f.png'
         };
 
         const customCursor = document.getElementById('custom-cursor');
 
-        // Track mouse movement
         document.addEventListener('mousemove', (e) => {
             if (customCursor.style.display === 'block') {
-                customCursor.style.left = e.pageX + 'px';
-                customCursor.style.top = e.pageY + 'px';
+                const x = e.clientX;
+                const y = e.clientY;
+                customCursor.style.left = x + 'px';
+                customCursor.style.top = y + 'px';
             }
         });
 
@@ -152,7 +155,7 @@
         function applyCursor(cursorType) {
             if (cursorType === 'default') {
                 customCursor.style.display = 'none';
-                document.body.style.cursor = 'none';
+                document.body.style.cursor = 'default';
             } else {
                 customCursor.src = cursorImages[cursorType];
                 customCursor.style.display = 'block';
@@ -169,12 +172,21 @@
         function changeTab() {
             let selection = document.getElementById('tabCloaker').value;
             document.title = selection;
+            let iconUrl = '';
+            
+            if (selection === "Classroom Login") {
+                iconUrl = "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://google.com&size=256";
+            } else if (selection === "Home") {
+                iconUrl = "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://powerschool.ignorelist.com/&size=256";
+            }
+            
             let link = document.querySelector("link[rel='icon']") || document.createElement('link');
             link.rel = 'icon';
-            link.href = selection === "Classroom Login" ? "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://google.com&size=256" :
-                        selection === "Home" ? "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://powerschool.ignorelist.com/&size=256" :
-                        "";
+            link.href = iconUrl;
             document.head.appendChild(link);
+            
+            localStorage.setItem('tabTitle', selection);
+            localStorage.setItem('tabIcon', iconUrl);
         }
 
         function openInBlank() {
@@ -188,16 +200,4 @@
         }
 
         window.onload = function() {
-            // Load theme
-            let savedTheme = localStorage.getItem('theme') || 'dark';
-            document.body.className = savedTheme === 'dark' ? 'dark-mode' : 'light-mode';
-            document.getElementById('themeSwitch').checked = savedTheme === 'dark';
-            
-            // Load cursor preference
-            let savedCursor = localStorage.getItem('cursor') || 'default';
-            document.getElementById('cursorSelect').value = savedCursor;
-            applyCursor(savedCursor);
-        };
-    </script>
-</body>
-</html>
+            let savedTheme = localStorage.getItem('theme
