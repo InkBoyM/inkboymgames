@@ -12,6 +12,7 @@
             background-color: #121212;
             color: white;
             transition: background-color 0.3s, color 0.3s;
+            cursor: none; /* Hide default cursor */
         }
         h1 {
             font-size: 3rem;
@@ -28,7 +29,7 @@
             border: 2px solid white;
             padding: 10px;
             width: 150px;
-            cursor: pointer;
+            cursor: none; /* Hide default cursor */
             transition: transform 0.3s ease-in-out;
         }
         .game-button:hover {
@@ -38,12 +39,15 @@
             width: 100px;
             height: 100px;
         }
-        .settings {
-            margin-top: 30px;
-        }
-        input, select, button {
-            padding: 5px;
-            margin-top: 10px;
+        .settings-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #333;
+            border: none;
+            padding: 10px;
+            cursor: none; /* Hide default cursor */
+            border-radius: 5px;
         }
         .dark-mode {
             background-color: #121212;
@@ -53,9 +57,19 @@
             background-color: #ffffff;
             color: black;
         }
+        #custom-cursor {
+            width: 32px;
+            height: 32px;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            display: none; /* Initially hidden */
+        }
     </style>
 </head>
 <body>
+    <img id="custom-cursor" alt="cursor">
+    <button class="settings-button" onclick="window.location.href='https://inkboym.github.io/inkboymmath/settings.htm'">⚙️ Settings</button>
     <h1>MadEgg EX</h1>
     <div class="button-container">
         <a class="game-button" href="https://inkboym.github.io/inkboymmath/binghome.htm">
@@ -83,70 +97,42 @@
             <p>Baldi's Basics</p>
         </a>
     </div>
-    <div class="settings">
-        <h2>About:blank cloaker</h2>
-        <input type="text" id="gameInput" placeholder="Enter game name from above ^^^">
-        <button onclick="openInBlank()">Open</button>
-        <iframe id="gameFrame" style="width:100%; height:500px; border:none;"></iframe>
-        <h2>Tab Cloaker</h2>
-        <select id="tabCloaker" onchange="changeTab()">
-            <option value="MadEgg EX">Default</option>
-            <option value="Classroom Login">Search</option>
-            <option value="Home">Classroom</option>
-        </select>
-        <h2>Theme</h2>
-        <label for="themeSwitch">Dark Mode</label>
-        <input type="checkbox" id="themeSwitch" onchange="toggleTheme()">
-    </div>
+
     <script>
-        const gameLinks = {
-            "baldis basics": "https://inkboym.github.io/inkboymmath/baldigame.html",
-            "doge 2048": "https://inkboym.github.io/inkboymmath/doge.html",
-            "funny shooter": "https://inkboym.github.io/inkboymmath/funnyshooter.html",
-            "minecraft": "https://inkboym.github.io/inkboymmath/minicraft.html",
-            "cookie clicker": "https://inkboym.github.io/inkboymmath/stormykittenrefernce.html"
+        const cursorImages = {
+            'glitch': 'https://www.pngmart.com/files/22/Cursor-PNG-Transparent.png',
+            'clean': 'https://www.transparentpng.com/download/cursor/blue-frame-game-cursor-clipart-png-ClaSFm.png',
+            'nostalgia': 'https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/e1254a25-ec8e-4043-8ea7-d6f5fa4e32fe/dhdwtkp-908ea2d9-35d6-4e72-9aa3-eb1def5e5e6f.png'
         };
 
-        function embedGame() {
-            let gameName = document.getElementById('gameInput').value.toLowerCase();
-            if (gameLinks[gameName]) {
-                document.getElementById('gameFrame').src = gameLinks[gameName];
+        const customCursor = document.getElementById('custom-cursor');
+
+        // Track mouse movement
+        document.addEventListener('mousemove', (e) => {
+            if (customCursor.style.display === 'block') {
+                customCursor.style.left = e.pageX + 'px';
+                customCursor.style.top = e.pageY + 'px';
+            }
+        });
+
+        function applyCursor(cursorType) {
+            if (cursorType === 'default') {
+                customCursor.style.display = 'none';
+                document.body.style.cursor = 'none';
             } else {
-                alert("Game not found!");
+                customCursor.src = cursorImages[cursorType];
+                customCursor.style.display = 'block';
+                document.body.style.cursor = 'none';
             }
         }
 
-        function openInBlank() {
-            let gameName = document.getElementById('gameInput').value.toLowerCase();
-            if (gameLinks[gameName]) {
-                let newWindow = window.open("about:blank", "_blank");
-                newWindow.document.write(`<embed src="${gameLinks[gameName]}" style="width:100%; height:100%;">`);
-            } else {
-                alert("Game not found!");
-            }
-        }
-
-        function changeTab() {
-            let selection = document.getElementById('tabCloaker').value;
-            document.title = selection;
-            let link = document.querySelector("link[rel='icon']") || document.createElement('link');
-            link.rel = 'icon';
-            link.href = selection === "Classroom Login" ? "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://google.com&size=256" :
-                        selection === "Home" ? "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://powerschool.ignorelist.com/&size=256" :
-                        "";
-            document.head.appendChild(link);
-        }
-
-        function toggleTheme() {
-            let isDark = document.getElementById('themeSwitch').checked;
-            document.body.className = isDark ? 'dark-mode' : 'light-mode';
-            localStorage.setItem('theme', isDark ? 'dark' : 'light');
-        }
-
-        window.onload = function () {
+        // Load settings on page load
+        window.onload = function() {
             let savedTheme = localStorage.getItem('theme') || 'dark';
             document.body.className = savedTheme === 'dark' ? 'dark-mode' : 'light-mode';
-            document.getElementById('themeSwitch').checked = savedTheme === 'dark';
+            
+            let savedCursor = localStorage.getItem('cursor') || 'default';
+            applyCursor(savedCursor);
         };
     </script>
 </body>
