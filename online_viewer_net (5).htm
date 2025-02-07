@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>PBLOCKER | Proxy</title>
+    <meta name="description" content="Ultraviolet is a highly sophisticated proxy used for evading internet censorship or accessing websites in a controlled sandbox using the power of service-workers. Unblock sites today!" />
+    <meta name="keywords" content="proxy, web proxy, ultraviolet, service workers, unblock websites, unblock chromebook, free web proxy, proxy list, proxy sites, un block chromebook, online proxy, proxy server, proxysite, proxy youtube, bypass securly, bypass iboss, bypass lightspeed filter, holy unblocker, chromebooks, titanium network, unblock youtube, youtube proxy, unblocked youtube, youtube unblocked">
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#434c5e">
+    <meta name="googlebot" content="index, follow, snippet" />
+    
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        * {
+            font-family: Roboto;
+        }
+
+        body {
+            margin: 0;
+            background: hsl(247, 100%, 42%);
+            background-image: url('https://media4.giphy.com/media/BHNfhgU63qrks/giphy.gif');
+            background-size: cover;
+            background-repeat: no-repeat;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .logo-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            margin-top: 10%;
+        }
+
+        .logo {
+            width: 150px;
+        }
+
+        .logo-wrapper h1 {
+            color: black;
+        }
+
+        form {
+            display: flex;
+            justify-content: center;
+        }
+
+        form input {
+            background: none;
+            font-family: inherit;
+            padding: 0px 17px;
+            height: 48px;
+            border: 1px solid rgba(0, 0, 0, .2);
+            border-radius: 50px;
+            outline: none;
+            width: 350px;
+            margin-top: 5px;
+            color: #000;
+        }
+
+        #result {
+            width: 100%;
+            height: 90vh;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="logo-wrapper">
+        <img class="logo" src="" alt="" />
+        <h1>Madegg EX | DumbProxy V1</h1>
+    </div>
+    <form>
+        <input id="searchInput" placeholder="Search">
+    </form>
+    <iframe id="result"></iframe>
+    <footer>
+        <a href="">Click me for nothing!</a>
+        <a href="https://inkboym.github.io/inkboymmath/home.htm">MadEgg EX </a>
+        <a href="https://killsecurly.com">KillSecurly</a>
+        <span>&copy; MadEgg 2023-2025</span>
+        <a href="coming soon lul">Info</a>
+    </footer>
+
+    <script>
+        const form = document.querySelector('form');
+        const input = document.getElementById('searchInput');
+        const resultFrame = document.getElementById('result');
+
+        async function fetchData(url) {
+            try {
+                console.log("Fetching:", url);
+                const response = await fetch(`https://api.codetabs.com/v1/proxy/?quest=${encodeURIComponent(url)}`);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                const text = await response.text();
+                const blob = new Blob([text], { type: 'text/html' });
+                const blobUrl = URL.createObjectURL(blob);
+                resultFrame.src = blobUrl;
+            } catch (error) {
+                console.error("Fetch error:", error);
+                resultFrame.srcdoc = "<p>Error fetching data: " + error.message + "</p>";
+            }
+        }
+
+        form.addEventListener('submit', async event => {
+            event.preventDefault();
+            let query = input.value.trim();
+
+            if (!isUrl(query)) {
+                fetchData(`https://www.google.com/search?q=${encodeURIComponent(query)}`);
+            } else {
+                fetchData(query);
+            }
+        });
+
+        function isUrl(val = '') {
+            return /^http(s?):\/\//.test(val) || (val.includes('.') && val.substr(0, 1) !== ' ');
+        }
+
+        resultFrame.addEventListener("load", function() {
+            const iframeDoc = resultFrame.contentDocument || resultFrame.contentWindow.document;
+            iframeDoc.addEventListener("click", function(event) {
+                const link = event.target.closest("a");
+                if (link && link.href) {
+                    event.preventDefault();
+                    navigator.clipboard.writeText(link.href).then(() => {
+                        input.value = link.href;
+                        form.dispatchEvent(new Event('submit'));
+                    }).catch(err => {
+                        console.error("Failed to copy: ", err);
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
