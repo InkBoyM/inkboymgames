@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sound Effects - MadEgg EX</title>
+    <link href="https://fonts.cdnfonts.com/css/facon" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Facon', sans-serif;
+            text-align: center;
+            background-color: #121212;
+            color: white;
+            transition: background-color 0.3s, color 0.3s;
+            padding: 20px;
+        }
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+        .button-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .sound-button {
+            background-color: #222;
+            border: 2px solid white;
+            padding: 15px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.3s ease-in-out;
+            font-size: 1.1rem;
+        }
+        .sound-button:hover {
+            transform: scale(1.05);
+        }
+        .top-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background-color: #333;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .dark-mode {
+            background-color: #121212;
+            color: white;
+        }
+        .light-mode {
+            background-color: #ffffff;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <button class="top-button" onclick="window.location.href='index.htm'">🏠 Home</button>
+    <h1>Sound Effects</h1>
+    <div class="button-container">
+        <button class="sound-button" onclick="playSound('https://file.garden/Z43SqDt67TpUFO8v/kidsyay.mp3')">Kids Yay!</button>
+        <button class="sound-button" onclick="playSound('https://file.garden/Z43SqDt67TpUFO8v/ohmygod.mp3')">Oh My God</button>
+        <button class="sound-button" onclick="playSound('https://file.garden/Z43SqDt67TpUFO8v/vine-boom.mp3')">Vine Boom</button>
+        <button class="sound-button" onclick="playSound('https://file.garden/Z43SqDt67TpUFO8v/android-notif.mp3')">Android Notification</button>
+        <button class="sound-button" onclick="playSound('https://file.garden/Z43SqDt67TpUFO8v/bazinga.mp3')">Bazinga</button>
+        <button class="sound-button" onclick="playSound('https://file.garden/Z43SqDt67TpUFO8v/brawl-stars-loading-sound.mp3')">Brawl Stars</button>
+        <button class="sound-button" onclick="playSound('https://file.garden/Z43SqDt67TpUFO8v/lebron-james.mp3')">Lebron James</button>
+        <button class="sound-button" onclick="playSound('https://file.garden/Z43SqDt67TpUFO8v/bababooey.mp3')">Baba Booey</button>
+        <button class="sound-button" onclick="playSound('https://file.garden/Z43SqDt67TpUFO8v/taco-bell.mp3')">Taco Bell</button>
+        <button class="sound-button" onclick="playSound('https://file.garden/Z43SqDt67TpUFO8v/bananadontjigglejiggle.mp3')">Banana Jiggle</button>
+        <button class="sound-button" onclick="playSound('https://file.garden/Z43SqDt67TpUFO8v/squid-games-pink-soldiers.mp3')">Squid Game</button>
+        <button class="sound-button" onclick="playSound('https://file.garden/Z43SqDt67TpUFO8v/ohnoohnoohnonono.mp3')">Oh No No No</button>
+        <button class="sound-button" onclick="playSound('https://file.garden/Z43SqDt67TpUFO8v/fart.mp3')">Fart Sound</button>
+        <button class="sound-button" onclick="playSound('https://file.garden/Z43SqDt67TpUFO8v/fortnite-battlepass.mp3')">Fortnite Pass</button>
+        <button class="sound-button" onclick="playSound('https://file.garden/Z43SqDt67TpUFO8v/helloyourcomputerhasvirus.mp3')">Computer Virus</button>
+        <button class="sound-button" onclick="playSound('https://file.garden/Z43SqDt67TpUFO8v/yummy.mp3')">Yummy</button>
+        <button class="sound-button" onclick="playSound('https://file.garden/Z43SqDt67TpUFO8v/you-didnt-have-to-cut-me-off.mp3')">Cut Me Off</button>
+        <button class="sound-button" onclick="playSound('https://file.garden/Z43SqDt67TpUFO8v/baby-shark-dance-sing-and-dance-animal-songs-pinkfong-songs-for-children-audiotrimmer.mp3')">Baby Shark</button>
+        <button class="sound-button" onclick="playSound('https://file.garden/Z43SqDt67TpUFO8v/gas-gas-gas.mp3')">Gas Gas Gas</button>
+        <button class="sound-button" onclick="playSound('https://file.garden/Z43SqDt67TpUFO8v/nokieringtone.mp3')">Nokia</button>
+    </div>
+
+    <script>
+        let currentAudio = null;
+
+        function playSound(url) {
+            if (currentAudio) {
+                currentAudio.pause();
+                currentAudio.currentTime = 0;
+            }
+            currentAudio = new Audio(url);
+            currentAudio.loop = true;
+            currentAudio.play();
+        }
+
+        window.onload = function() {
+            let savedTheme = localStorage.getItem('theme') || 'dark';
+            document.body.className = savedTheme === 'dark' ? 'dark-mode' : 'light-mode';
+        };
+    </script>
+</body>
+</html>
