@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MadEgg EX</title>
+    <link href="https://fonts.cdnfonts.com/css/facon" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Facon', sans-serif;
+            text-align: center;
+            background-color: #121212;
+            color: white;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+        .button-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+        }
+        .game-button {
+            background-color: #222;
+            border: 2px solid white;
+            padding: 10px;
+            width: 150px;
+            cursor: pointer;
+            transition: transform 0.3s ease-in-out;
+        }
+        .game-button:hover {
+            transform: scale(1.1);
+        }
+        img {
+            width: 100px;
+            height: 100px;
+        }
+        .settings {
+            margin-top: 30px;
+        }
+        input, select, button {
+            padding: 5px;
+            margin-top: 10px;
+        }
+        .dark-mode {
+            background-color: #121212;
+            color: white;
+        }
+        .light-mode {
+            background-color: #ffffff;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <h1>MadEgg EX</h1>
+    <div class="button-container">
+        <a class="game-button" href="https://inkboym.github.io/inkboymmath/binghome.htm">
+            <img src="https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://bing.com&size=256">
+            <p>Home (bing)</p>
+        </a>
+        <a class="game-button" href="https://inkboym.github.io/inkboymmath/stormykittenrefernce.html">
+            <img src="https://mecvg.github.io/projects/cookie-clicker/cookie1.jpeg">
+            <p>Cookie Clicker</p>
+        </a>
+        <a class="game-button" href="https://inkboym.github.io/inkboymmath/minicraft.html">
+            <img src="https://cdn.freebiesupply.com/logos/large/2x/minecraft-1-logo-svg-vector.svg">
+            <p>Minecraft</p>
+        </a>
+        <a class="game-button" href="https://inkboym.github.io/inkboymmath/funnyshooter.html">
+            <img src="https://m.media-amazon.com/images/I/41+GCaM3dcL.png">
+            <p>Funny Shooter</p>
+        </a>
+        <a class="game-button" href="https://inkboym.github.io/inkboymmath/doge.html">
+            <img src="https://mecvg.github.io/projects/doge2048/doge1.jpeg">
+            <p>Doge 2048</p>
+        </a>
+        <a class="game-button" href="https://inkboym.github.io/inkboymmath/baldigame.html">
+            <img src="https://mecvg.github.io/projects/baldis-basics/splash.png">
+            <p>Baldi's Basics</p>
+        </a>
+    </div>
+    <div class="settings">
+        <h2>About:blank cloaker</h2>
+        <input type="text" id="gameInput" placeholder="Enter game name from above ^^^">
+        <button onclick="openInBlank()">Open</button>
+        <iframe id="gameFrame" style="width:100%; height:500px; border:none;"></iframe>
+        <h2>Tab Cloaker</h2>
+        <select id="tabCloaker" onchange="changeTab()">
+            <option value="MadEgg EX">Default</option>
+            <option value="Classroom Login">Search</option>
+            <option value="Home">Classroom</option>
+        </select>
+        <h2>Theme</h2>
+        <label for="themeSwitch">Dark Mode</label>
+        <input type="checkbox" id="themeSwitch" onchange="toggleTheme()">
+    </div>
+    <script>
+        const gameLinks = {
+            "baldis basics": "https://inkboym.github.io/inkboymmath/baldigame.html",
+            "doge 2048": "https://inkboym.github.io/inkboymmath/doge.html",
+            "funny shooter": "https://inkboym.github.io/inkboymmath/funnyshooter.html",
+            "minecraft": "https://inkboym.github.io/inkboymmath/minicraft.html",
+            "cookie clicker": "https://inkboym.github.io/inkboymmath/stormykittenrefernce.html"
+        };
+
+        function embedGame() {
+            let gameName = document.getElementById('gameInput').value.toLowerCase();
+            if (gameLinks[gameName]) {
+                document.getElementById('gameFrame').src = gameLinks[gameName];
+            } else {
+                alert("Game not found!");
+            }
+        }
+
+        function openInBlank() {
+            let gameName = document.getElementById('gameInput').value.toLowerCase();
+            if (gameLinks[gameName]) {
+                let newWindow = window.open("about:blank", "_blank");
+                newWindow.document.write(`<embed src="${gameLinks[gameName]}" style="width:100%; height:100%;">`);
+            } else {
+                alert("Game not found!");
+            }
+        }
+
+        function changeTab() {
+            let selection = document.getElementById('tabCloaker').value;
+            document.title = selection;
+            let link = document.querySelector("link[rel='icon']") || document.createElement('link');
+            link.rel = 'icon';
+            link.href = selection === "Classroom Login" ? "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://google.com&size=256" :
+                        selection === "Home" ? "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://powerschool.ignorelist.com/&size=256" :
+                        "";
+            document.head.appendChild(link);
+        }
+
+        function toggleTheme() {
+            let isDark = document.getElementById('themeSwitch').checked;
+            document.body.className = isDark ? 'dark-mode' : 'light-mode';
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        }
+
+        window.onload = function () {
+            let savedTheme = localStorage.getItem('theme') || 'dark';
+            document.body.className = savedTheme === 'dark' ? 'dark-mode' : 'light-mode';
+            document.getElementById('themeSwitch').checked = savedTheme === 'dark';
+        };
+    </script>
+</body>
+</html>
