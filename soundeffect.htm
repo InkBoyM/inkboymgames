@@ -82,6 +82,13 @@
         <button class="sound-button" onclick="playSound('https://file.garden/Z43SqDt67TpUFO8v/baby-shark-dance-sing-and-dance-animal-songs-pinkfong-songs-for-children-audiotrimmer.mp3')">Baby Shark</button>
         <button class="sound-button" onclick="playSound('https://file.garden/Z43SqDt67TpUFO8v/gas-gas-gas.mp3')">Gas Gas Gas</button>
         <button class="sound-button" onclick="playSound('https://file.garden/Z43SqDt67TpUFO8v/nokieringtone.mp3')">Nokia</button>
+        <button class="sound-button" onclick="playSound('https://file.garden/Z43SqDt67TpUFO8v/%D0%A1%D0%B8%D0%B3%D0%BC%D0%B0%20%D0%91%D0%BE%D0%B9%20_%20Sigma%20Boy%20-%20Lyrics%20Video%20(Russian%2C%20English%20%26%20Pronunciation)%20_%20Betsy%20%26%20%D0%9C%D0%B0%D1%80%D0%B8%D1%8F%20%D0%AF%D0%BD%D0%BA%D0%BE%D0%B2%D1%81%D0%BA%D0%B0%D1%8F.mp3')">SIGMA SIGMA BOI</button>
+        <button class="sound-button" onclick="playSound('https://file.garden/Z43SqDt67TpUFO8v/CHING%20CHENG%20HANJI%20but%20it%20s%20Google%20image%20(Misheard%20lyrics).mp3')">Chinese Ahh Song 💀</button>
+        <button class="sound-button" onclick="playSound('https://file.garden/Z43SqDt67TpUFO8v/is%20that%20a%20cellular%20device%20sound%20effect.mp3')">Is that a cellural device i see there 🤓</button>
+        <button class="sound-button" onclick="playSound('https://file.garden/Z43SqDt67TpUFO8v/Windy%20Knickers%20from%20IDEAL.mp3')">Windy ni- WHAT (dont play at school)</button>
+         <button class="sound-button" onclick="playSound('https://file.garden/Z43SqDt67TpUFO8v/SongPeel-BassBooster-Output%20(1).wav')">Ryans World!</button>
+         <button class="sound-button" onclick="playSound('https://file.garden/Z43SqDt67TpUFO8v/shimmy%20shimmy%20ay%20shimmy%20ay%20shimmy%20ya.mp3')">Shimmy shimmy ah</button>
+         <button class="sound-button" onclick="playSound('https://file.garden/Z43SqDt67TpUFO8v/SlowedAndReverb-Output.wav')">Squid Game Mignle but i trapped them in my basement</button>
     </div>
 
     <script>
@@ -93,7 +100,7 @@
                 currentAudio.currentTime = 0;
             }
             currentAudio = new Audio(url);
-            currentAudio.loop = true;
+            currentAudio.loop = false; // Changed to false to prevent looping
             currentAudio.play();
         }
 
